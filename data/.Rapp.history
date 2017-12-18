@@ -1,0 +1,950 @@
+counts
+write.csv(counts,"counts.csv")
+df<-read.csv("~/Desktop/NIHPD.csv")#
+df2<-subset(df, MRI_QC_Status=="Pass")#
+df2$age<-df2$Age_Months_Date_of_Visit_to_DOB/12#
+ages=5:23#
+counts=matrix(NA,length(ages), length(ages))#
+#
+offset=4#
+for(a1 in ages) {#
+	for(a2 in ages) {#
+		t<-table(df2$Subject_ID[df2$age >=a1 & df2$age <a2])#
+		counts[a1-offset,a2-offset]=sum(t>=3)#
+	}#
+}#
+colnames(counts)<-ages#
+rownames(counts)<-ages#
+write.csv(counts,"counts_age5.csv")
+ages=0:5#
+offset=-1#
+counts=matrix(NA,length(ages), length(ages))#
+for(a1 in ages) {#
+	for(a2 in ages) {#
+		t<-table(df2$Subject_ID[df2$age >=a1 & df2$age <a2])#
+		counts[a1-offset,a2-offset]=sum(t>=3)#
+	}#
+}#
+colnames(counts)<-ages#
+rownames(counts)<-ages#
+write.csv(counts,"counts_age4_3t.csv")
+counts
+ages=0:5#
+offset=-1#
+counts=matrix(NA,length(ages), length(ages))#
+for(a1 in ages) {#
+	for(a2 in ages) {#
+		t<-table(df2$Subject_ID[df2$age >=a1 & df2$age <a2])#
+		counts[a1-offset,a2-offset]=sum(t>=4)#
+	}#
+}#
+colnames(counts)<-ages#
+rownames(counts)<-ages#
+write.csv(counts,"counts_age4_4t.csv")
+counts
+ages=0:10#
+offset=-1#
+counts=matrix(NA,length(ages), length(ages))#
+for(a1 in ages) {#
+	for(a2 in ages) {#
+		t<-table(df2$Subject_ID[df2$age >=a1 & df2$age <a2])#
+		counts[a1-offset,a2-offset]=sum(t>=4)#
+	}#
+}#
+colnames(counts)<-ages#
+rownames(counts)<-ages
+counts
+ages=0:10#
+offset=-1#
+counts=matrix(NA,length(ages), length(ages))#
+for(a1 in ages) {#
+	for(a2 in ages) {#
+		t<-table(df2$Subject_ID[df2$age >=a1 & df2$age <a2])#
+		counts[a1-offset,a2-offset]=sum(t>=3)#
+	}#
+}#
+colnames(counts)<-ages#
+rownames(counts)<-ages
+counts
+ages=4:23#
+offset=3
+counts=matrix(NA,length(ages), length(ages))#
+for(a1 in ages) {#
+	for(a2 in ages) {#
+		t<-table(df2$Subject_ID[df2$age >=a1 & df2$age <a2])#
+		counts[a1-offset,a2-offset]=sum(t>=3)#
+	}#
+}#
+colnames(counts)<-ages#
+rownames(counts)<-ages
+counts
+write.csv(counts,"counts_age5_3t.csv")
+ages=0:6#
+offset=-1#
+counts=matrix(NA,length(ages), length(ages))#
+for(a1 in ages) {#
+	for(a2 in ages) {#
+		t<-table(df2$Subject_ID[df2$age >=a1 & df2$age <a2])#
+		counts[a1-offset,a2-offset]=sum(t>=3)#
+	}#
+}#
+colnames(counts)<-ages#
+rownames(counts)<-ages#
+write.csv(counts,"counts_age0_3t.csv")
+ages=0:6#
+offset=-1#
+counts=matrix(NA,length(ages), length(ages))#
+for(a1 in ages) {#
+	for(a2 in ages) {#
+		t<-table(df2$Subject_ID[df2$age >=a1 & df2$age <a2])#
+		counts[a1-offset,a2-offset]=sum(t>=4)#
+	}#
+}#
+colnames(counts)<-ages#
+rownames(counts)<-ages#
+write.csv(counts,"counts_age0_4t.csv")
+counts
+df<-read.csv("~/Desktop/cards.csv")
+head(df)
+df<-read.csv("~/Desktop/cards.csv")
+head(df)
+a<-split(df$attacks,'\w+')
+a<-split(df$attacks,'[a-z]+')
+a[1]
+length(a)
+a<-split(df$attacks,'[a-z]+')[[1]]
+a
+a<-split(df$attacks,'[a-z]')[[1]]
+m<-regexpr('[0-9]+',df$attacks)
+matches<-regmatches(df$attacks,m)
+head(matches)
+length(matches)
+dim(df)
+as.numeric(matches[1])
+values<-function(x) {#
+m<-regexpr('[0-9]+',x)#
+matches<-regmatches(x,m)#
+max(as.numeric(matches))#
+}
+apply(df$attacks,1,matches)
+apply(df$attacks,1,values)
+?apply
+sapply(df$attacks,values)
+df$values<-sapply(df$attacks,values)
+df$values[is.infinite(df$values)]<-0
+df$sumvalue<-df$hit_points+10*df$values
+summary(df$sumvalue)
+hist(df$sumvalue)
+quantile(df$sumvalue,250)
+quantile(df$sumvalue,250,na.rm=TRUE)
+sum(df$sumvalue<250)
+sum(df$sumvalue<250,na.rm=TRUE)
+sum(is.na(df$sumvalue))
+sum(!is.na(df$sumvalue))
+7734/7868
+summary(df)
+quantile(df$sumvalue)
+quantile(df$sumvalue, c(.5,.75.,8))
+quantile(df$sumvalue, .75)
+quantile(df$sumvalue, c(.5,.75.,8),na.rm=TRUE)
+quantile(df$sumvalue, .75,na.rm=TRUE)
+quantile(df$sumvalue, .8,na.rm=TRUE)
+df2<-subset(df,values>0)
+sum(df$sumvalue<250,na.rm=TRUE)
+sum(df2$sumvalue<250,na.rm=TRUE)/dim(df2)[1]
+quantile(df2$sumvalue, .8,na.rm=TRUE)
+quantile(df2$sumvalue, .75,na.rm=TRUE)
+sd(df2$sumvalue)
+sd(df2$sumvalue,na.rm=TRUE)
+sum(df2$sumvalue<250,na.rm=TRUE)/sum(!is.na(df2$sumvalue))
+summary(df2)
+qnorm(.01)
+qnorm(.001)
+qnorm(.005)
+binom.test(14,48,54/215)
+df<-read.csv("/Volumes/PEGASUS/Projects/Dyslexia/ReadingBrain/STUDIES/Hancock/FamilyScripts/merged_behav.csv")
+colnames(df)
+cor(df,select=c("T_SWE_ss", "T_PDE_ss","WRMT_WA_ss","WRMT_WID_ss"))
+cor(subset(df,select=c("T_SWE_ss", "T_PDE_ss","WRMT_WA_ss","WRMT_WID_ss"))
+)
+cor(subset(df,select=c("T_SWE_ss", "T_PDE_ss","WRMT_WA_ss","WRMT_WID_ss")),use="pairwise")
+round(cor(subset(df,select=c("T_SWE_ss", "T_PDE_ss","WRMT_WA_ss","WRMT_WID_ss")),use="pairwise"),2)
+dt(.95,17)
+dt(.05,17)
+qt(.95,17)
+qt(.999,16)
+qt(.99,16)
+qt(.999,15)
+qt(.99,15)
+qt(.95,23)
+plot(seq(20,60,by=.1),10*dcauchy(seq(20,60,by=.1),40,12),type='l',xlab='Frequency (Hz)',ylab='Neural Response',yaxt='n',lwd=2)#
+cols<-rainbow(5)#
+fs<-sort(runif(5,35,45))#
+for (f in 1:5) {#
+	points(seq(20,60,by=.1),10*dcauchy(seq(20,60,by=.1),fs[f],12),type='l',xlab='Frequency (Hz)',ylab='Neural Response',yaxt='n',lwd=2, col=cols[f])#
+#
+}
+?rainbow
+plot(seq(20,60,by=.1),10*dcauchy(seq(20,60,by=.1),40,12),type='l',xlab='Frequency (Hz)',ylab='Neural Response',yaxt='n',lwd=2)#
+cols<-heat.colors(5)#
+fs<-sort(runif(5,35,45))#
+for (f in 1:5) {#
+	points(seq(20,60,by=.1),10*dcauchy(seq(20,60,by=.1),fs[f],12),type='l',xlab='Frequency (Hz)',ylab='Neural Response',yaxt='n',lwd=2, col=cols[f])#
+#
+}
+plot(seq(20,60,by=.1),10*dcauchy(seq(20,60,by=.1),40,12),type='l',xlab='Frequency (Hz)',ylab='Neural Response',yaxt='n',lwd=2)#
+cols<-heat.colors(10)#
+fs<-sort(runif(5,35,45))#
+for (f in 1:5) {#
+	points(seq(20,60,by=.1),10*dcauchy(seq(20,60,by=.1),fs[f],12),type='l',xlab='Frequency (Hz)',ylab='Neural Response',yaxt='n',lwd=2, col=cols[f])#
+#
+}
+plot(seq(20,60,by=.1),10*dcauchy(seq(20,60,by=.1),40,12),type='l',xlab='Frequency (Hz)',ylab='Neural Response',yaxt='n',lwd=2)#
+cols<-heat.colors(15)#
+fs<-sort(runif(5,35,45))#
+for (f in 1:5) {#
+	points(seq(20,60,by=.1),10*dcauchy(seq(20,60,by=.1),fs[f],12),type='l',xlab='Frequency (Hz)',ylab='Neural Response',yaxt='n',lwd=2, col=cols[f])#
+#
+}
+plot(seq(20,60,by=.1),10*dcauchy(seq(20,60,by=.1),40,12),type='l',xlab='Frequency (Hz)',ylab='Neural Response',yaxt='n',lwd=2)#
+cols<-heat.colors(5)#
+fs<-sort(runif(5,35,45))#
+for (f in 1:5) {#
+	points(seq(20,60,by=.1),10*dcauchy(seq(20,60,by=.1),fs[f],12),type='l',xlab='Frequency (Hz)',ylab='Neural Response',yaxt='n',lwd=2, col=cols[f])#
+#
+}
+plot(seq(20,60,by=.1),10*dcauchy(seq(20,60,by=.1),40,12),type='l',xlab='Frequency (Hz)',ylab='Neural Response',yaxt='n',lwd=2)#
+cols<-topo.colors(5)#
+fs<-sort(runif(5,35,45))#
+for (f in 1:5) {#
+	points(seq(20,60,by=.1),10*dcauchy(seq(20,60,by=.1),fs[f],12),type='l',xlab='Frequency (Hz)',ylab='Neural Response',yaxt='n',lwd=2, col=cols[f])#
+#
+}
+plot(seq(20,60,by=.1),10*dcauchy(seq(20,60,by=.1),40,12),type='l',xlab='Frequency (Hz)',yaxt='n',lwd=2, main='Neural Response')#
+cols<-topo.colors(5)#
+fs<-sort(runif(5,35,45))#
+for (f in 1:5) {#
+	points(seq(20,60,by=.1),10*dcauchy(seq(20,60,by=.1),fs[f],12),type='l',xlab='Frequency (Hz)',ylab='Neural Response',yaxt='n',lwd=2, col=cols[f])#
+#
+}
+plot(seq(20,60,by=.1),10*dcauchy(seq(20,60,by=.1),40,12),type='l',xlab='Frequency (Hz)',yaxt='n',lwd=2, ylab=NULL,main='Neural Response')#
+cols<-topo.colors(5)#
+fs<-sort(runif(5,35,45))#
+for (f in 1:5) {#
+	points(seq(20,60,by=.1),10*dcauchy(seq(20,60,by=.1),fs[f],12),type='l',xlab='Frequency (Hz)',ylab='Neural Response',yaxt='n',lwd=2, col=cols[f])#
+#
+}
+plot(seq(20,60,by=.1),10*dcauchy(seq(20,60,by=.1),40,12),type='l',xlab='Frequency (Hz)',yaxt='n',lwd=2, ylab=NA,main='Neural Response')#
+cols<-topo.colors(5)#
+fs<-sort(runif(5,35,45))#
+for (f in 1:5) {#
+	points(seq(20,60,by=.1),10*dcauchy(seq(20,60,by=.1),fs[f],12),type='l',xlab='Frequency (Hz)',ylab='Neural Response',yaxt='n',lwd=2, col=cols[f])#
+#
+}
+plot(seq(20,60,by=.1),10*dcauchy(seq(20,60,by=.1),40,12),type='l',xlab='Frequency (Hz)',yaxt='n',lwd=2, ylab=NA,main='Neural Response')
+MI<-MIs.lh[[2]]#
+avg=MI[[which(dimnames(MI)[[1]]=="avg")]]#
+left=MI[[which(dimnames(MI)[[1]]=="left")]]#
+#
+avg.speech=avg[[which(dimnames(avg)[[1]]=="speech")]]#
+avg.mi=avg[[which(dimnames(avg)[[1]]=="mi")]]#
+avg.mi.amp=avg[[which(dimnames(avg)[[1]]=="mi.amp")]]#
+#
+left.speech=left[[which(dimnames(left)[[1]]=="speech")]]#
+left.mi=left[[which(dimnames(left)[[1]]=="mi")]]#
+#
+mi=MI[[which(dimnames(MI)[[1]]=="mi")]]#
+mi.amp=MI[[which(dimnames(MI)[[1]]=="mi.amp")]]#
+#
+speech=MI[[which(dimnames(MI)[[1]]=="speech")]]#
+#
+SubjID=as.character(unlist(MI[[which(dimnames(MI)[[1]]=="SubjID")]]))#
+#
+df.speech<-data.frame(speech,avg.speech,left.speech,SubjID)#
+df.speech<-merge(df.speech,df.mrs)#
+cor.test(df.speech$speech,df.speech$GABACorr)#
+cor.test(df.speech$speech,df.speech$GluCorr)#
+plot(df.speech$left.speech,df.speech$Glu_raw/(df.speech$GABA_raw+df.speech$Glu_raw))#
+cor.test(df.speech$speech,df.speech$Glu_raw/(df.speech$GABA_raw+df.speech$Glu_raw))#
+#
+df.speech<-merge(df.speech,df.redcap,by.x="SubjID", by.y="record_id")#
+cor.test(df.speech$wj4_oral_sb_ss,df.speech$speech)#
+cor.test(df.speech$towre_pde_ss,df.speech$Glu_raw/(df.speech$GABA_raw+df.speech$Glu_raw))#
+#
+m1<-lm(towre_swe_ss~speech+age,df.speech)#
+#
+mi=mi[,2:8]#
+mi<-mi/rowSums(mi)#
+#
+#mi<-t(scale(t(mi)))#
+#mi<-scale(mi)#
+df.mi<-as.data.frame(mi)#
+colnames(df.mi)<-paste("f",seq(25,55,by=5),sep=".")#
+df.mi$SubjID<-SubjID#
+df.mi<-reshape(df.mi,idvar="SubjID",timevar="f",varying=list(colnames(df.mi)[1:7]),direction='long')#
+df.mi<-merge(df.mi,df.mrs)#
+#xyplot(f.20~I(GABA_raw/(GABA_raw+Glu_raw))|f,df.mi)#
+xyplot(f.25~I(GABACorr)|f,subset(df.mi, GABACorr >5))#
+xyplot(f.20~f|SubjID,subset(df.mi, GABACorr >5))#
+#
+df.mi$freq<-seq(25,55,by=5)[df.mi$f]#
+df.mi$GABA<-df.mi$GABACorr#
+#
+## ggplot version#
+ggplot(df.mi, aes(GABA,f.25)) +#
+geom_point() +#
+geom_smooth(method="lm") +#
+facet_wrap(~freq) +#
+labs(x="GABA+ (i.u.)", y="Relative MI", title="3-5 Hz : Gamma MI") +#
+theme_classic()
+load("/Users/rhancock/Dropbox/ASSR/results/data.Rdata")
+load("/Users/rhancock/Dropbox/Presentations/NeuroChemtalk/MIs/MIs.Rdata")
+library(ggplot)
+library(ggplot2)
+library(lattice)
+MI<-MIs.lh[[2]]#
+avg=MI[[which(dimnames(MI)[[1]]=="avg")]]#
+left=MI[[which(dimnames(MI)[[1]]=="left")]]#
+#
+avg.speech=avg[[which(dimnames(avg)[[1]]=="speech")]]#
+avg.mi=avg[[which(dimnames(avg)[[1]]=="mi")]]#
+avg.mi.amp=avg[[which(dimnames(avg)[[1]]=="mi.amp")]]#
+#
+left.speech=left[[which(dimnames(left)[[1]]=="speech")]]#
+left.mi=left[[which(dimnames(left)[[1]]=="mi")]]#
+#
+mi=MI[[which(dimnames(MI)[[1]]=="mi")]]#
+mi.amp=MI[[which(dimnames(MI)[[1]]=="mi.amp")]]#
+#
+speech=MI[[which(dimnames(MI)[[1]]=="speech")]]#
+#
+SubjID=as.character(unlist(MI[[which(dimnames(MI)[[1]]=="SubjID")]]))#
+#
+df.speech<-data.frame(speech,avg.speech,left.speech,SubjID)#
+df.speech<-merge(df.speech,df.mrs)#
+cor.test(df.speech$speech,df.speech$GABACorr)#
+cor.test(df.speech$speech,df.speech$GluCorr)#
+plot(df.speech$left.speech,df.speech$Glu_raw/(df.speech$GABA_raw+df.speech$Glu_raw))#
+cor.test(df.speech$speech,df.speech$Glu_raw/(df.speech$GABA_raw+df.speech$Glu_raw))#
+#
+df.speech<-merge(df.speech,df.redcap,by.x="SubjID", by.y="record_id")#
+cor.test(df.speech$wj4_oral_sb_ss,df.speech$speech)#
+cor.test(df.speech$towre_pde_ss,df.speech$Glu_raw/(df.speech$GABA_raw+df.speech$Glu_raw))#
+#
+m1<-lm(towre_swe_ss~speech+age,df.speech)#
+#
+mi=mi[,2:8]#
+mi<-mi/rowSums(mi)#
+#
+#mi<-t(scale(t(mi)))#
+#mi<-scale(mi)#
+df.mi<-as.data.frame(mi)#
+colnames(df.mi)<-paste("f",seq(25,55,by=5),sep=".")#
+df.mi$SubjID<-SubjID#
+df.mi<-reshape(df.mi,idvar="SubjID",timevar="f",varying=list(colnames(df.mi)[1:7]),direction='long')#
+df.mi<-merge(df.mi,df.mrs)#
+#xyplot(f.20~I(GABA_raw/(GABA_raw+Glu_raw))|f,df.mi)#
+xyplot(f.25~I(GABACorr)|f,subset(df.mi, GABACorr >5))#
+xyplot(f.20~f|SubjID,subset(df.mi, GABACorr >5))#
+#
+df.mi$freq<-seq(25,55,by=5)[df.mi$f]#
+df.mi$GABA<-df.mi$GABACorr#
+#
+## ggplot version#
+ggplot(df.mi, aes(GABA,f.25)) +#
+geom_point() +#
+geom_smooth(method="lm") +#
+facet_wrap(~freq) +#
+labs(x="GABA+ (i.u.)", y="Relative MI", title="3-5 Hz : Gamma MI") +#
+theme_classic()
+ls()
+MI<-MIs.lh[[2]]
+MIs.lh<-MIs
+MI<-MIs.lh[[2]]#
+avg=MI[[which(dimnames(MI)[[1]]=="avg")]]#
+left=MI[[which(dimnames(MI)[[1]]=="left")]]#
+#
+avg.speech=avg[[which(dimnames(avg)[[1]]=="speech")]]#
+avg.mi=avg[[which(dimnames(avg)[[1]]=="mi")]]#
+avg.mi.amp=avg[[which(dimnames(avg)[[1]]=="mi.amp")]]#
+#
+left.speech=left[[which(dimnames(left)[[1]]=="speech")]]#
+left.mi=left[[which(dimnames(left)[[1]]=="mi")]]#
+#
+mi=MI[[which(dimnames(MI)[[1]]=="mi")]]#
+mi.amp=MI[[which(dimnames(MI)[[1]]=="mi.amp")]]#
+#
+speech=MI[[which(dimnames(MI)[[1]]=="speech")]]#
+#
+SubjID=as.character(unlist(MI[[which(dimnames(MI)[[1]]=="SubjID")]]))#
+#
+df.speech<-data.frame(speech,avg.speech,left.speech,SubjID)#
+df.speech<-merge(df.speech,df.mrs)#
+cor.test(df.speech$speech,df.speech$GABACorr)#
+cor.test(df.speech$speech,df.speech$GluCorr)#
+plot(df.speech$left.speech,df.speech$Glu_raw/(df.speech$GABA_raw+df.speech$Glu_raw))#
+cor.test(df.speech$speech,df.speech$Glu_raw/(df.speech$GABA_raw+df.speech$Glu_raw))#
+#
+df.speech<-merge(df.speech,df.redcap,by.x="SubjID", by.y="record_id")#
+cor.test(df.speech$wj4_oral_sb_ss,df.speech$speech)#
+cor.test(df.speech$towre_pde_ss,df.speech$Glu_raw/(df.speech$GABA_raw+df.speech$Glu_raw))#
+#
+m1<-lm(towre_swe_ss~speech+age,df.speech)#
+#
+mi=mi[,2:8]#
+mi<-mi/rowSums(mi)#
+#
+#mi<-t(scale(t(mi)))#
+#mi<-scale(mi)#
+df.mi<-as.data.frame(mi)#
+colnames(df.mi)<-paste("f",seq(25,55,by=5),sep=".")#
+df.mi$SubjID<-SubjID#
+df.mi<-reshape(df.mi,idvar="SubjID",timevar="f",varying=list(colnames(df.mi)[1:7]),direction='long')#
+df.mi<-merge(df.mi,df.mrs)#
+#xyplot(f.20~I(GABA_raw/(GABA_raw+Glu_raw))|f,df.mi)#
+xyplot(f.25~I(GABACorr)|f,subset(df.mi, GABACorr >5))#
+xyplot(f.20~f|SubjID,subset(df.mi, GABACorr >5))#
+#
+df.mi$freq<-seq(25,55,by=5)[df.mi$f]#
+df.mi$GABA<-df.mi$GABACorr#
+#
+## ggplot version#
+ggplot(df.mi, aes(GABA,f.25)) +#
+geom_point() +#
+geom_smooth(method="lm") +#
+facet_wrap(~freq) +#
+labs(x="GABA+ (i.u.)", y="Relative MI", title="3-5 Hz : Gamma MI") +#
+theme_classic()
+MI<-MIs.lh[[3]]#
+avg=MI[[which(dimnames(MI)[[1]]=="avg")]]#
+left=MI[[which(dimnames(MI)[[1]]=="left")]]#
+#
+avg.speech=avg[[which(dimnames(avg)[[1]]=="speech")]]#
+avg.mi=avg[[which(dimnames(avg)[[1]]=="mi")]]#
+avg.mi.amp=avg[[which(dimnames(avg)[[1]]=="mi.amp")]]#
+#
+left.speech=left[[which(dimnames(left)[[1]]=="speech")]]#
+left.mi=left[[which(dimnames(left)[[1]]=="mi")]]#
+#
+mi=MI[[which(dimnames(MI)[[1]]=="mi")]]#
+mi.amp=MI[[which(dimnames(MI)[[1]]=="mi.amp")]]#
+#
+speech=MI[[which(dimnames(MI)[[1]]=="speech")]]#
+#
+SubjID=as.character(unlist(MI[[which(dimnames(MI)[[1]]=="SubjID")]]))#
+#
+df.speech<-data.frame(speech,avg.speech,left.speech,SubjID)#
+df.speech<-merge(df.speech,df.mrs)#
+cor.test(df.speech$speech,df.speech$GABACorr)#
+cor.test(df.speech$speech,df.speech$GluCorr)#
+plot(df.speech$left.speech,df.speech$Glu_raw/(df.speech$GABA_raw+df.speech$Glu_raw))#
+cor.test(df.speech$speech,df.speech$Glu_raw/(df.speech$GABA_raw+df.speech$Glu_raw))#
+#
+df.speech<-merge(df.speech,df.redcap,by.x="SubjID", by.y="record_id")#
+cor.test(df.speech$wj4_oral_sb_ss,df.speech$speech)#
+cor.test(df.speech$towre_pde_ss,df.speech$Glu_raw/(df.speech$GABA_raw+df.speech$Glu_raw))#
+#
+m1<-lm(towre_swe_ss~speech+age,df.speech)#
+#
+mi=mi[,2:8]#
+mi<-mi/rowSums(mi)#
+#
+#mi<-t(scale(t(mi)))#
+#mi<-scale(mi)#
+df.mi<-as.data.frame(mi)#
+colnames(df.mi)<-paste("f",seq(25,55,by=5),sep=".")#
+df.mi$SubjID<-SubjID#
+df.mi<-reshape(df.mi,idvar="SubjID",timevar="f",varying=list(colnames(df.mi)[1:7]),direction='long')#
+df.mi<-merge(df.mi,df.mrs)#
+#xyplot(f.20~I(GABA_raw/(GABA_raw+Glu_raw))|f,df.mi)#
+xyplot(f.25~I(GABACorr)|f,subset(df.mi, GABACorr >5))#
+xyplot(f.20~f|SubjID,subset(df.mi, GABACorr >5))#
+#
+df.mi$freq<-seq(25,55,by=5)[df.mi$f]#
+df.mi$GABA<-df.mi$GABACorr#
+#
+## ggplot version#
+ggplot(df.mi, aes(GABA,f.25)) +#
+geom_point() +#
+geom_smooth(method="lm") +#
+facet_wrap(~freq) +#
+labs(x="GABA+ (i.u.)", y="Relative MI", title="3-5 Hz : Gamma MI") +#
+theme_classic()
+MIs=list()#
+for (i in 1:4) {#
+	MI<-readMat(sprintf('/Volumes/MEGMRS/Analyses/Speech/MI_sum_%d.mat',i))#
+	MIs[[i]]=MI$MI.subjs#
+}
+library(R.matlab)
+MIs=list()#
+for (i in 1:4) {#
+	MI<-readMat(sprintf('/Volumes/MEGMRS/Analyses/Speech/MI_sum_%d.mat',i))#
+	MIs[[i]]=MI$MI.subjs#
+}
+MIs.lh<-MIs
+MI<-MIs.lh[[3]]#
+avg=MI[[which(dimnames(MI)[[1]]=="avg")]]#
+left=MI[[which(dimnames(MI)[[1]]=="left")]]#
+#
+avg.speech=avg[[which(dimnames(avg)[[1]]=="speech")]]#
+avg.mi=avg[[which(dimnames(avg)[[1]]=="mi")]]#
+avg.mi.amp=avg[[which(dimnames(avg)[[1]]=="mi.amp")]]#
+#
+left.speech=left[[which(dimnames(left)[[1]]=="speech")]]#
+left.mi=left[[which(dimnames(left)[[1]]=="mi")]]#
+#
+mi=MI[[which(dimnames(MI)[[1]]=="mi")]]#
+mi.amp=MI[[which(dimnames(MI)[[1]]=="mi.amp")]]#
+#
+speech=MI[[which(dimnames(MI)[[1]]=="speech")]]#
+#
+SubjID=as.character(unlist(MI[[which(dimnames(MI)[[1]]=="SubjID")]]))#
+#
+df.speech<-data.frame(speech,avg.speech,left.speech,SubjID)#
+df.speech<-merge(df.speech,df.mrs)#
+cor.test(df.speech$speech,df.speech$GABACorr)#
+cor.test(df.speech$speech,df.speech$GluCorr)#
+plot(df.speech$left.speech,df.speech$Glu_raw/(df.speech$GABA_raw+df.speech$Glu_raw))#
+cor.test(df.speech$speech,df.speech$Glu_raw/(df.speech$GABA_raw+df.speech$Glu_raw))#
+#
+df.speech<-merge(df.speech,df.redcap,by.x="SubjID", by.y="record_id")#
+cor.test(df.speech$wj4_oral_sb_ss,df.speech$speech)#
+cor.test(df.speech$towre_pde_ss,df.speech$Glu_raw/(df.speech$GABA_raw+df.speech$Glu_raw))#
+#
+m1<-lm(towre_swe_ss~speech+age,df.speech)#
+#
+mi=mi[,2:8]#
+mi<-mi/rowSums(mi)#
+#
+#mi<-t(scale(t(mi)))#
+#mi<-scale(mi)#
+df.mi<-as.data.frame(mi)#
+colnames(df.mi)<-paste("f",seq(25,55,by=5),sep=".")#
+df.mi$SubjID<-SubjID#
+df.mi<-reshape(df.mi,idvar="SubjID",timevar="f",varying=list(colnames(df.mi)[1:7]),direction='long')#
+df.mi<-merge(df.mi,df.mrs)#
+#xyplot(f.20~I(GABA_raw/(GABA_raw+Glu_raw))|f,df.mi)#
+xyplot(f.25~I(GABACorr)|f,subset(df.mi, GABACorr >5))#
+xyplot(f.20~f|SubjID,subset(df.mi, GABACorr >5))#
+#
+df.mi$freq<-seq(25,55,by=5)[df.mi$f]#
+df.mi$GABA<-df.mi$GABACorr#
+#
+## ggplot version#
+ggplot(df.mi, aes(GABA,f.25)) +#
+geom_point() +#
+geom_smooth(method="lm") +#
+facet_wrap(~freq) +#
+labs(x="GABA+ (i.u.)", y="Relative MI", title="3-5 Hz : Gamma MI") +#
+theme_classic()
+with(subset(df.mi, f==6 & GABACorr > 5 & f.25 < 2.5),cor.test(f.25,GABACorr))
+df.mi<-subset(df.mi,GABACorr>5)#
+## ggplot version#
+ggplot(df.mi, aes(GABA,f.25)) +#
+geom_point() +#
+geom_smooth(method="lm") +#
+facet_wrap(~freq) +#
+labs(x="GABA+ (i.u.)", y="Relative MI", title="3-5 Hz : Gamma MI") +#
+theme_classic()
+with(subset(df.mi, f==6 & GABACorr > 5 & f.25 < 2.5),cor.test(f.25,GABACorr))
+MI<-MIs.lh[[2]]#
+avg=MI[[which(dimnames(MI)[[1]]=="avg")]]#
+left=MI[[which(dimnames(MI)[[1]]=="left")]]#
+#
+avg.speech=avg[[which(dimnames(avg)[[1]]=="speech")]]#
+avg.mi=avg[[which(dimnames(avg)[[1]]=="mi")]]#
+avg.mi.amp=avg[[which(dimnames(avg)[[1]]=="mi.amp")]]#
+#
+left.speech=left[[which(dimnames(left)[[1]]=="speech")]]#
+left.mi=left[[which(dimnames(left)[[1]]=="mi")]]#
+#
+mi=MI[[which(dimnames(MI)[[1]]=="mi")]]#
+mi.amp=MI[[which(dimnames(MI)[[1]]=="mi.amp")]]#
+#
+speech=MI[[which(dimnames(MI)[[1]]=="speech")]]#
+#
+SubjID=as.character(unlist(MI[[which(dimnames(MI)[[1]]=="SubjID")]]))#
+#
+df.speech<-data.frame(speech,avg.speech,left.speech,SubjID)#
+df.speech<-merge(df.speech,df.mrs)#
+cor.test(df.speech$speech,df.speech$GABACorr)#
+cor.test(df.speech$speech,df.speech$GluCorr)#
+plot(df.speech$left.speech,df.speech$Glu_raw/(df.speech$GABA_raw+df.speech$Glu_raw))#
+cor.test(df.speech$speech,df.speech$Glu_raw/(df.speech$GABA_raw+df.speech$Glu_raw))#
+#
+df.speech<-merge(df.speech,df.redcap,by.x="SubjID", by.y="record_id")#
+cor.test(df.speech$wj4_oral_sb_ss,df.speech$speech)#
+cor.test(df.speech$towre_pde_ss,df.speech$Glu_raw/(df.speech$GABA_raw+df.speech$Glu_raw))#
+#
+m1<-lm(towre_swe_ss~speech+age,df.speech)#
+#
+mi=mi[,2:8]#
+mi<-mi/rowSums(mi)#
+#
+#mi<-t(scale(t(mi)))#
+#mi<-scale(mi)#
+df.mi<-as.data.frame(mi)#
+colnames(df.mi)<-paste("f",seq(25,55,by=5),sep=".")#
+df.mi$SubjID<-SubjID#
+df.mi<-reshape(df.mi,idvar="SubjID",timevar="f",varying=list(colnames(df.mi)[1:7]),direction='long')#
+df.mi<-merge(df.mi,df.mrs)#
+#xyplot(f.20~I(GABA_raw/(GABA_raw+Glu_raw))|f,df.mi)#
+xyplot(f.25~I(GABACorr)|f,subset(df.mi, GABACorr >5))#
+xyplot(f.20~f|SubjID,subset(df.mi, GABACorr >5))#
+#
+df.mi$freq<-seq(25,55,by=5)[df.mi$f]#
+df.mi$GABA<-df.mi$GABACorr#
+#
+df.mi<-subset(df.mi,GABACorr>5)#
+## ggplot version#
+ggplot(df.mi, aes(GABA,f.25)) +#
+geom_point() +#
+geom_smooth(method="lm") +#
+facet_wrap(~freq) +#
+labs(x="GABA+ (i.u.)", y="Relative MI", title="3-5 Hz : Gamma MI") +#
+theme_classic()
+with(subset(df.mi, f==6 & GABACorr > 5 & f.25 < 2.5),cor.test(f.25,GABACorr))
+for (f in seq(25,55,by=5)) {#
+with(subset(df.mi, freq==f & GABACorr > 5 & f.25 < 2.5),cor.test(f.25,GABACorr))#
+}
+for (fi in seq(25,55,by=5)) {#
+with(subset(df.mi, freq==fi & GABACorr > 5 & f.25 < 2.5),cor.test(f.25,GABACorr))#
+}
+for (fi in seq(25,55,by=5)) {#
+print(with(subset(df.mi, freq==fi & GABACorr > 5 & f.25 < 2.5),cor.test(f.25,GABACorr)))#
+}
+save(MIs, MIs.lh, file="~/Dropbox/Presentations/NeuroChemtalk/MIs/MIs.Rdata")
+setwd('/Volumes/RHANCOCK/scripts_fd.5')
+load('data.Rdata')#
+subjs<-read.table('subjects.txt')#
+des<-read.table('design_Glu.txt')#
+#
+df<-data.frame(SubjID=subjs$V1,fd.mean=des$V3,int=des$V1)#
+df<-merge(df,df.mrs)#
+df$GluGABA_raw<-df$Glu_raw/(df$Glu_raw+df$GABA_raw)#
+df$GluGABA_corr<-df$GluCorr/(df$GluCorr+df$GABACorr)#
+#
+write.table(cbind(scale(subset(df,select=c("GluGABA_corr", "fd.mean"))),1), file="design_GluGABA_corr.txt",row.names=FALSE,col.names=FALSE)
+write.table(cbind(scale(subset(df,select=c("GluGABA_corr", "fd.mean", "age"))),1), file="design_age_GluGABA_corr.txt",row.names=FALSE,col.names=FALSE)
+write.table(cbind(scale(subset(df,select=c("GluGABA_corr", "fd.mean", "basic_age"))),1), file="design_age_GluGABA_corr.txt",row.names=FALSE,col.names=FALSE)
+load('data.Rdata')#
+subjs<-read.table('subjects.txt')#
+des<-read.table('design_Glu.txt')#
+#
+df<-data.frame(SubjID=subjs$V1,fd.mean=des$V3,int=des$V1)#
+df<-merge(df,df.mrs)#
+df<-merge(df,df.redcap,by.x='SubjID',by.y='record_id')#
+df$GluGABA_raw<-df$Glu_raw/(df$Glu_raw+df$GABA_raw)#
+df$GluGABA_corr<-df$GluCorr/(df$GluCorr+df$GABACorr)#
+df$GluGABA_corr<-df$GluCorr/(df$GluCorr+df$GABACorr)#
+#
+write.table(cbind(scale(subset(df,select=c("GluGABA_corr", "fd.mean", "basic_age"))),1), file="design_age_GluGABA_corr.txt",row.names=FALSE,col.names=FALSE)
+df.redcap$age
+load('data.Rdata')#
+subjs<-read.table('subjects.txt')#
+des<-read.table('design_Glu.txt')#
+#
+df<-data.frame(SubjID=subjs$V1,fd.mean=des$V3,int=des$V1)#
+df<-merge(df,df.mrs)#
+df<-merge(df,df.redcap,by.x='SubjID',by.y='record_id')#
+df$GluGABA_raw<-df$Glu_raw/(df$Glu_raw+df$GABA_raw)#
+df$GluGABA_corr<-df$GluCorr/(df$GluCorr+df$GABACorr)#
+df$GluGABA_corr<-df$GluCorr/(df$GluCorr+df$GABACorr)#
+#
+write.table(cbind(scale(subset(df,select=c("GluGABA_corr", "fd.mean", "age"))),1), file="design_age_GluGABA_corr.txt",row.names=FALSE,col.names=FALSE)
+write.table(cbind(scale(subset(df,select=c("GluCorr", "GABACorr","fd.mean", "age"))),1), file="design_Glu_cov.txt",row.names=FALSE,col.names=FALSE)
+df.mrs$Glu
+df.mrs$Glu_raw
+df.mrs$GABA
+write.table(cbind(scale(subset(df,select=c("GluCorr", "fd.mean", "age"))),1), file="design_Glu_cov.txt",row.names=FALSE,col.names=FALSE)#
+#
+write.table(cbind(scale(subset(df,select=c("GABACorr", "fd.mean", "age"))),1), file="design_GABA_cov.txt",row.names=FALSE,col.names=FALSE)
+load('data.Rdata')#
+subjs<-read.table('subjects.txt')#
+des<-read.table('design_Glu.txt')#
+#
+df<-data.frame(SubjID=subjs$V1,fd.mean=des$V3,int=des$V1)#
+df<-merge(df,df.mrs)#
+df<-merge(df,df.redcap,by.x='SubjID',by.y='record_id')#
+df$GluGABA_raw<-df$Glu_raw/(df$Glu_raw+df$GABA_raw)#
+df$GluGABA_corr<-df$GluCorr/(df$GluCorr+df$GABACorr)#
+df$GluGABA_corr<-df$GluCorr/(df$GluCorr+df$GABACorr)#
+#
+write.table(cbind(scale(subset(df,select=c("GluGABA_raw", "fd.mean", "age"))),1), file="design_GluGABA_raw.txt",row.names=FALSE,col.names=FALSE)
+setwd("~")
+data(iris)
+ls()
+?hclust
+hclust(iris)
+colnames(iris)
+summary(iris)
+hclust(iris[,1:4])
+dim(iris)
+summary(iris[,1:4])
+iris
+diris<-dist(iris[,1:4])
+hc_iris<-hclust(diris)
+plot(hc_iris)
+hc_iris
+names(hc_iris)
+hc_iris$merge
+hc_iris$order
+?hclust
+plot(hc_iris,labels=FALSE)
+hc_iris
+hc_iris$x
+hc_iris$merge
+qt(.95,166)
+qt(.01,166)
+qt(.001,166)
+library(MCMCglmm)#
+bx<-read.csv('/Volumes/PEGASUS/Projects/Dyslexia/ReadingBrain/STUDIES/Hancock/FamilyScripts/merged_behav.csv')#
+#
+df<-read.table('lh.thickness', header=TRUE,row.names=1)#
+df.z<-scale(df)#
+n_outliers=rowSums(abs(df.z)>3)#
+no_outliers<-names(n_outliers)[n_outliers==0]#
+df<-df[no_outliers,]#
+s<-unlist(strsplit(rownames(df),'-'))#
+#
+df$FamID<-s[seq(1,length(s),by=2)]#
+df$IndivID<-s[seq(2,length(s),by=2)]#
+df$ID_Study<-paste(df$FamID,df$IndivID,sep='_')#
+#
+df<-merge(df,bx)#
+has_mother<-table(df$FamID,df$IndivID==2)#
+has_father<-table(df$FamID,df$IndivID==3)#
+has_proband<-table(df$FamID,df$IndivID==1)#
+#
+n_members<-table(df$FamID)#
+has_parents<-intersect(rownames(has_mother)[has_mother[,2]==1], rownames(has_father)[has_father[,2]==1])#
+keep<-intersect(has_parents, names(n_members)[n_members>2])#
+#keep only probands#
+keep<-intersect(keep,rownames(has_mother)[has_proband[,2]==1])#
+df<-subset(df,FamID %in% keep)#
+#
+m1<-lm(lh_G_oc.temp_lat.fusifor_thickness~Age_at_Scan+Gender,df)#
+df$resid<-resid(m1)#
+#df.children<-subset(df, IndivID !=2 & IndivID !=3)#
+df.children<-subset(df, IndivID ==1)#
+df.mother<-subset(df, IndivID==2)#
+df.father<-subset(df, IndivID==3)#
+df.wide<-merge(df.children,df.mother,by.x='FamID',by.y='FamID',suffixes=c('.child','.mother'))#
+df.wide<-merge(df.wide,df.father,by.x='FamID',by.y='FamID')#
+cor.test((df.wide$resid+df.wide$resid.mother)/2,df.wide$resid.child)#
+cor.test(df.wide$resid.mother,df.wide$resid.child)#
+cor.test(df.wide$resid,df.wide$resid.child)#
+#
+#genetic correlations#
+df.wide<-subset(df.wide, !is.na(T_PDE_ss.mother) & !is.na(T_PDE_ss))#
+#
+df.wide$resid.mid<-(df.wide$resid+df.wide$resid.mother)/2#
+df.wide$T_PDE_ss.mid<-(df.wide$T_PDE_ss+df.wide$T_PDE_ss.mother)/2#
+covXY = cov(df.wide$resid.mid, df.wide$resid.child)*cov(df.wide$T_PDE_ss.mid, df.wide$T_PDE_ss.child)#
+#
+r1=cov(df.wide$resid.mid, df.wide$T_PDE_ss.child)/sqrt(covXY)#
+r2=cov(df.wide$resid.child, df.wide$T_PDE_ss.mid)/sqrt(covXY)
+r1
+covXY = sqrt(cov(df.wide$resid.mid, df.wide$resid.child))*sqrt(cov(df.wide$T_PDE_ss.mid, df.wide$T_PDE_ss.child))#
+r1=cov(df.wide$resid.mid, df.wide$T_PDE_ss.child)/covXY
+r1
+r1=sqrt(cov(df.wide$resid.mid, df.wide$T_PDE_ss.child)/covXY)
+cov(df.wide$resid.mid, df.wide$T_PDE_ss.child)
+covXY
+sqrt((cov(df.wide$resid.mid,df.wide$T_PDE_ss.child)*cov(df.wide$T_PDE_ss.mid,df.wide$T_PDE_ss.child))/(#
+cov(df.wide$resid.mid,df.wide$resid.child)*cov(df.wide$T_PDE_ss.mid,df.wide$T_PDE_ss.child)))
+(cov(df.wide$resid.mid,df.wide$T_PDE_ss.child)*cov(df.wide$T_PDE_ss.mid,df.wide$T_PDE_ss.child))
+(#
+cov(df.wide$resid.mid,df.wide$resid.child)*cov(df.wide$T_PDE_ss.mid,df.wide$T_PDE_ss.child))
+a=df.wide$resid.mid#
+b=df.wide$resid.child#
+x=df.wide$T_PDE_ss.mid#
+y=df.wide$T_PDE_ss.child#
+rg=(cov(a,y)*cov(x,b))/(cov(a,b)*cov(x,y))
+sqrt(rg)
+rg
+rg=(cov(a,y)+cov(x,b))/(2*sqrt(cov(a,b)*cov(x,y)))
+rg
+library(MCMCglmm)#
+bx<-read.csv('/Volumes/PEGASUS/Projects/Dyslexia/ReadingBrain/STUDIES/Hancock/FamilyScripts/merged_behav.csv')#
+#
+df<-read.table('lh.thickness', header=TRUE,row.names=1)#
+df.z<-scale(df)#
+n_outliers=rowSums(abs(df.z)>3)#
+no_outliers<-names(n_outliers)[n_outliers==0]#
+df<-df[no_outliers,]#
+s<-unlist(strsplit(rownames(df),'-'))#
+#
+df$FamID<-s[seq(1,length(s),by=2)]#
+df$IndivID<-s[seq(2,length(s),by=2)]#
+df$ID_Study<-paste(df$FamID,df$IndivID,sep='_')#
+#
+df<-merge(df,bx)#
+has_mother<-table(df$FamID,df$IndivID==2)#
+has_father<-table(df$FamID,df$IndivID==3)#
+has_proband<-table(df$FamID,df$IndivID==1)#
+#
+n_members<-table(df$FamID)#
+has_parents<-intersect(rownames(has_mother)[has_mother[,2]==1], rownames(has_father)[has_father[,2]==1])#
+keep<-intersect(has_parents, names(n_members)[n_members>2])#
+#keep only probands#
+keep<-intersect(keep,rownames(has_mother)[has_proband[,2]==1])#
+df<-subset(df,FamID %in% keep)#
+#
+m1<-lm(lh_G_oc.temp_lat.fusifor_thickness~Age_at_Scan+Gender,df)#
+df$resid<-resid(m1)#
+#df.children<-subset(df, IndivID !=2 & IndivID !=3)#
+df.children<-subset(df, IndivID ==1)#
+df.mother<-subset(df, IndivID==2)#
+df.father<-subset(df, IndivID==3)#
+df.wide<-merge(df.children,df.mother,by.x='FamID',by.y='FamID',suffixes=c('.child','.mother'))#
+df.wide<-merge(df.wide,df.father,by.x='FamID',by.y='FamID')#
+cor.test((df.wide$resid+df.wide$resid.mother)/2,df.wide$resid.child)#
+cor.test(df.wide$resid.mother,df.wide$resid.child)#
+cor.test(df.wide$resid,df.wide$resid.child)#
+#
+#genetic correlations#
+df.wide<-subset(df.wide, !is.na(T_PDE_ss.mother) & !is.na(T_PDE_ss))#
+#
+df.wide$resid.mid<-(df.wide$resid+df.wide$resid.mother)/2#
+df.wide$T_PDE_ss.mid<-(df.wide$T_PDE_ss+df.wide$T_PDE_ss.mother)/2
+a=df.wide$resid.mid#
+b=df.wide$resid.child#
+x=df.wide$T_PDE_ss.mid#
+y=df.wide$T_PDE_ss.child
+rg=(cov(a,y)+cov(x,b))/(2*sqrt(cov(a,b)*cov(x,y)))
+rg
+rg=(cor(a,y)*cor(x,b))/(cor(a,b)*cor(x,y))
+rg
+sqrt(rg)
+rg^.5
+a
+b
+x
+y
+is.numeric(y)
+is.numeric(x)
+x
+y=y-mean(y)
+y
+x=x-mean(x)
+rg=(cov(a,y)*cov(x,b))/(cov(a,b)*cov(x,y))
+rg
+y
+x
+cor(x,y)
+cor(a,b)
+cor(a,x)
+cor(y,b)
+r2=cov(df.wide$resid.child, df.wide$T_PDE_ss.mid)/sqrt(covXY)
+r2
+r1=cov(df.wide$resid.mid, df.wide$T_PDE_ss.child)/sqrt(covXY)
+r1
+.5*r1
+.5*r1+.5*r2
+(.5*r1+.5*r2)/2
+roi='lh_G_oc.temp_lat.fusifor_area'
+m1<-lm(lh_G_oc.temp_lat.fusifor_thickness~Age_at_Scan+Gender,df)#
+df$resid<-resid(m1)#
+#df.children<-subset(df, IndivID !=2 & IndivID !=3)#
+df.children<-subset(df, IndivID ==1)#
+df.mother<-subset(df, IndivID==2)#
+df.father<-subset(df, IndivID==3)#
+df.wide<-merge(df.children,df.mother,by.x='FamID',by.y='FamID',suffixes=c('.child','.mother'))#
+df.wide<-merge(df.wide,df.father,by.x='FamID',by.y='FamID')#
+cor.test((df.wide$resid+df.wide$resid.mother)/2,df.wide$resid.child)#
+cor.test(df.wide$resid.mother,df.wide$resid.child)#
+cor.test(df.wide$resid,df.wide$resid.child)#
+#
+#genetic correlations#
+df.wide<-subset(df.wide, !is.na(T_PDE_ss.mother) & !is.na(T_PDE_ss))#
+#
+df.wide$resid.mid<-(df.wide$resid+df.wide$resid.mother)/2#
+df.wide$T_PDE_ss.mid<-(df.wide$T_PDE_ss+df.wide$T_PDE_ss.mother)/2#
+covXY = cov(df.wide$resid.mid, df.wide$resid.child)*cov(df.wide$T_PDE_ss.mid, df.wide$T_PDE_ss.child)#
+#
+covXY = cov(df.wide$resid.mid, df.wide$resid.child)*cov(df.wide$T_PDE_ss.mid, df.wide$T_PDE_ss.child)#
+r1=cov(df.wide$resid.mid, df.wide$T_PDE_ss.child)/sqrt(covXY)#
+r2=cov(df.wide$resid.child, df.wide$T_PDE_ss.mid)/sqrt(covXY)
+r1
+r2
+covXY
+m1<-lm(lh_G_oc.temp_lat.fusifor_thickness~Age_at_Scan+Gender,df)#
+df$resid<-resid(m1)#
+#df.children<-subset(df, IndivID !=2 & IndivID !=3)#
+df.children<-subset(df, IndivID ==1)#
+df.mother<-subset(df, IndivID==2)#
+df.father<-subset(df, IndivID==3)#
+df.wide<-merge(df.children,df.mother,by.x='FamID',by.y='FamID',suffixes=c('.child','.mother'))#
+df.wide<-merge(df.wide,df.father,by.x='FamID',by.y='FamID')#
+cor.test((df.wide$resid+df.wide$resid.mother)/2,df.wide$resid.child)#
+cor.test(df.wide$resid.mother,df.wide$resid.child)#
+cor.test(df.wide$resid,df.wide$resid.child)
+#genetic correlations#
+df.wide<-subset(df.wide, !is.na(T_PDE_ss.mother) & !is.na(T_PDE_ss))
+df.wide$resid.mid<-(df.wide$resid+df.wide$resid.mother)/2#
+df.wide$T_PDE_ss.mid<-(df.wide$T_PDE_ss+df.wide$T_PDE_ss.mother)/2#
+covXY = cov(df.wide$resid.mid, df.wide$resid.child)*cov(df.wide$T_PDE_ss.mid, df.wide$T_PDE_ss.child)
+rg=(cov(a,y)+cov(x,b))/(cov(a,b)*cov(x,y))
+rg
+sqrt(rg)
+rg=(cov(a,y)*cov(x,b))/(cov(a,b)*cov(x,y))
+rg
+sqrt(rg)
+install.packages('MCMCglmm')
+source('http://openmx.psyc.virginia.edu/getOpenMx.R')
+rg
+setwd("~")
+require(OpenMx)#
+#
+latVars<-paste(c("A1","E1","A2","E2"),rep(c("M","F","C"),each=4),sep="")#
+latVars<-paste(c("Y1","Y2"),rep(c("M","F","C"),each=2),sep="")#
+latVariances<-mxPath(from=latVars,arrows=2,free=FALSE,values=1)#
+#
+pathM1<-mxPath(from=paste(c("A1","E1"),"M", sep=""), to="Y1M", arrows=1,free=TRUE,label=c("a1","e1"))#
+#
+pathM2<-mxPath(from=paste(c("A2","E2"),"M", sep=""), to="Y2M", arrows=1,free=TRUE,label=c("a2","e2"))#
+#
+pathF1<-mxPath(from=paste(c("A1","E1"),"F", sep=""), to="Y1F", arrows=1,free=TRUE,label=c("a1","e1"))#
+#
+pathF2<-mxPath(from=paste(c("A2","E2"),"F", sep=""), to="Y2F", arrows=1,free=TRUE,label=c("a2","e2"))#
+#
+pathC1<-mxPath(from=paste(c("A1","E1"),"C", sep=""), to="Y1C", arrows=1,free=TRUE,label=c("a1","e1"))#
+#
+pathC2<-mxPath(from=paste(c("A2","E2"),"C", sep=""), to="Y2C", arrows=1,free=TRUE,label=c("a2","e2"))#
+#
+covAM<-mxPath(from="A1M", to="A2M",arrows=2,free=TRUE, label='rG')#
+covEM<-mxPath(from="E1M", to="E2M",arrows=2,free=TRUE, label='rE')#
+covAF<-mxPath(from="A1F", to="A2F",arrows=2,free=TRUE, label='rG')#
+covEF<-mxPath(from="E1F", to="E2F",arrows=2,free=TRUE, label='rE')#
+covAC<-mxPath(from="A1C", to="A2C",arrows=2,free=TRUE, label='rG')#
+covEC<-mxPath(from="E1C", to="E2C",arrows=2,free=TRUE, label='rE')#
+#
+covAMC<-mxPath(from="AM", to="AC", arrows=2,free=FALSE, values=.5)#
+covAFC<-mxPath(from="AF", to="AC", arrows=2,free=FALSE, values=.5)#
+#
+paths<-list(latVariances, pathM1,pathM2,pathF1,pathF2,pathC1,pathC2,covAM,covEM,covAF,covEF,covAC,covEC,covAMC,covAFC)#
+modelAE<-mxModel(model='AE', type='RAM',manifestVars=obsVars, latentVars=latVars,paths)#
+omxGraphviz(modelAE,dotFilename="AE.dot")
+source('http://openmx.psyc.virginia.edu/getOpenMx.R')
+library(openMx)
+require(OpenMx)
+install.packages('OpenMx')
+require(OpenMx)
+install.packages('OpenMx')
+require(OpenMx)
+library(mle)
+install.packages('mle')
+install.packages('stats4')
+?mle
+library(stats4)
+mle
+setwd('~/Box Sync/brainLENS_sync/iPadScreener/LiteracyStimuli/data/')
+library(xlsx)#
+imgnames<-read.table('BOSS/imagenames.txt')
+imgwords<-read.table('BOSS/imagenames.txt')#
+aoawords<-read.table('aoa_words.txt')
+setdiff(imgwords,aoawords)
+summary(aoawords)
+setdiff(imgwords$V1,aoawords$V1)
+install.packages('xlsx')
