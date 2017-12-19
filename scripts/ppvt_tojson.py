@@ -2,8 +2,9 @@ import json
 import pandas
 from collections import defaultdict
 from random import shuffle
-
-dfall = pandas.read_csv("/Users/rhancock/Box Sync/brainLENS_sync/iPadScreener/LiteracyStimuli/generated/ppvt/ppvt.csv")
+import sys
+#dfall = pandas.read_csv("/Users/rhancock/Box Sync/brainLENS_sync/iPadScreener/LiteracyStimuli/generated/ppvt/ppvt.csv")
+dfall = pandas.read_csv(sys.argv[1])
 
 
 vocab = []
